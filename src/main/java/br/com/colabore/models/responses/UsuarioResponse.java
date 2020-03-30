@@ -3,6 +3,8 @@ package br.com.colabore.models.responses;
 import br.com.colabore.models.Empresa;
 import br.com.colabore.models.Endereco;
 import br.com.colabore.models.Usuario;
+import br.com.colabore.utils.DataUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,8 +14,10 @@ import java.time.LocalDateTime;
 public class UsuarioResponse {
 
     private String id;
+    @JsonFormat(pattern = DataUtils.DATE_TIME_FORMAT)
     private LocalDateTime dataCadastro;
     private String nome;
+    @JsonFormat(pattern = DataUtils.DATE_FORMAT)
     private LocalDate dataNascimento;
     private String cpf;
     private String rg;

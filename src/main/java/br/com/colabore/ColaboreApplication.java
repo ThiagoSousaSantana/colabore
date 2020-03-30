@@ -24,19 +24,5 @@ public class ColaboreApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		var user = new Usuario();
-		var empresa = new Empresa();
-		user.setNome("Teste");
-		user.setDataCadastro(LocalDateTime.now());
-		user.setDataNascimento(LocalDate.now());
-
-		empresa.setCnpj("234234234");
-		empresa.setNomeFantasia("Teste");
-		empresa.setRazaoSocial("asdfasfafd");
-
-		user.setEmpresa(empresa);
-
-		repository.save(user);
-
 	}
 }

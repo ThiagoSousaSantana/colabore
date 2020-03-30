@@ -1,12 +1,15 @@
 package br.com.colabore.controllers;
 
 import br.com.colabore.models.Usuario;
+import br.com.colabore.models.forms.UsuarioForm;
 import br.com.colabore.models.responses.UsuarioResponse;
 import br.com.colabore.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -16,14 +19,16 @@ public class UsuarioContrller {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponse> insereUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioResponse> insereUsuario(@RequestBody @Valid UsuarioForm form) {
+        var usuario = usuarioService.salva(form);
+
         var uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(usuario.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(new UsuarioResponse(usuarioService.salva(usuario)));
+        return ResponseEntity.created(uri).body(new UsuarioResponse(usuario));
     }
 
     @GetMapping("/{id}")
