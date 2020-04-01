@@ -24,6 +24,7 @@ public class UsuarioResponse {
     private String estadoEmissorRg;
     private String email;
     private String telefone;
+    private boolean bloqueado;
 
     private Endereco endereco;
 
@@ -41,5 +42,6 @@ public class UsuarioResponse {
         this.telefone = usuario.getTelefone();
         this.endereco = usuario.getEndereco();
         this.empresa = usuario.getEmpresa();
+        this.bloqueado = usuario.isBloqueado();
     }
 }

@@ -42,4 +42,7 @@ public class UsuarioForm {
     @Valid
     @NotNull
     private Endereco endereco;
+
+    private boolean bloqueado;
+
 }

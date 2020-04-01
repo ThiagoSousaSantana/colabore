@@ -32,4 +32,25 @@ public class UsuarioService {
     public Page<UsuarioResponse> listaUsuarios(Pageable pageable) {
         return repository.findAll(pageable).map(UsuarioResponse::new);
     }
+
+    public Usuario atualizaUsuario(String id, UsuarioForm form) {
+        var usuario = buscaPorId(id);
+
+        atualizaUsuario(form, usuario);
+
+        return repository.save(usuario);
+    }
+
+    private void atualizaUsuario(UsuarioForm form, Usuario usuario) {
+        usuario.setSenha(form.getSenha());
+        usuario.setNome(form.getNome());
+        usuario.setDataNascimento(form.getDataNascimento());
+        usuario.setCpf(form.getCpf());
+        usuario.setRg(form.getRg());
+        usuario.setEstadoEmissorRg(form.getEstadoEmissorRg());
+        usuario.setTelefone(form.getTelefone());
+        usuario.setEmail(form.getEmail());
+        usuario.setEndereco(form.getEndereco());
+        usuario.setBloqueado(form.isBloqueado());
+    }
 }

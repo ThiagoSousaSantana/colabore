@@ -41,4 +41,10 @@ public class UsuarioContrller {
     public Page<UsuarioResponse> listaUsuarios(Pageable pageable) {
         return usuarioService.listaUsuarios(pageable);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> atualizaUsuario(@PathVariable String id,
+                                                           @RequestBody @Valid UsuarioForm form) {
+        return ResponseEntity.ok(new UsuarioResponse(usuarioService.atualizaUsuario(id, form)));
+    }
 }
