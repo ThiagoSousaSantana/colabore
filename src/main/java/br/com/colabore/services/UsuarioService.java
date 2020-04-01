@@ -2,6 +2,7 @@ package br.com.colabore.services;
 
 
 import br.com.colabore.models.Usuario;
+import br.com.colabore.models.forms.UsuarioBloqueadoForm;
 import br.com.colabore.models.forms.UsuarioForm;
 import br.com.colabore.models.responses.UsuarioResponse;
 import br.com.colabore.repositories.EnderecoRepository;
@@ -47,8 +48,13 @@ public class UsuarioService {
         return repository.save(usuario);
     }
 
+    public Usuario atualizaUsuario(Long id, UsuarioBloqueadoForm form) {
+        var usuario = buscaPorId(id);
+        usuario.setBloqueado(form.isBloqueado());
+        return repository.save(usuario);
+    }
+
     private void atualizaUsuario(UsuarioForm form, Usuario usuario) {
-        usuario.setSenha(form.getSenha());
         usuario.setNome(form.getNome());
         usuario.setDataNascimento(form.getDataNascimento());
         usuario.setCpf(form.getCpf());
