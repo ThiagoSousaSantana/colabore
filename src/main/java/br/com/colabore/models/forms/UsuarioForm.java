@@ -1,6 +1,8 @@
 package br.com.colabore.models.forms;
 
 import br.com.colabore.models.Endereco;
+import br.com.colabore.utils.DataUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -20,6 +22,7 @@ public class UsuarioForm {
     @NotBlank
     private String nome;
 
+    @JsonFormat(pattern = DataUtils.DATE_FORMAT)
     @NotNull
     private LocalDate dataNascimento;
 
