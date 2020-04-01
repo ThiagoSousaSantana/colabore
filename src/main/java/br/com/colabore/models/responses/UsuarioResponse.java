@@ -17,6 +17,7 @@ public class UsuarioResponse {
     @JsonFormat(pattern = DataUtils.DATE_TIME_FORMAT)
     private LocalDateTime dataCadastro;
     private String nome;
+    private String senha;
     @JsonFormat(pattern = DataUtils.DATE_FORMAT)
     private LocalDate dataNascimento;
     private String cpf;
@@ -34,6 +35,7 @@ public class UsuarioResponse {
         this.id = usuario.getId();
         this.dataCadastro = usuario.getDataCadastro();
         this.nome = usuario.getNome();
+        this.senha = usuario.getSenha();
         this.dataNascimento = usuario.getDataNascimento();
         this.cpf = usuario.getCpf();
         this.rg = usuario.getRg();
