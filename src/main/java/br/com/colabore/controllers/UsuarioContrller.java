@@ -33,7 +33,7 @@ public class UsuarioContrller {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> buscaUsuario(@PathVariable String id) {
+    public ResponseEntity<UsuarioResponse> buscaUsuario(@PathVariable Long id) {
         return ResponseEntity.ok(new UsuarioResponse(usuarioService.buscaPorId(id)));
     }
 
@@ -43,7 +43,7 @@ public class UsuarioContrller {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> atualizaUsuario(@PathVariable String id,
+    public ResponseEntity<UsuarioResponse> atualizaUsuario(@PathVariable Long id,
                                                            @RequestBody @Valid UsuarioForm form) {
         return ResponseEntity.ok(new UsuarioResponse(usuarioService.atualizaUsuario(id, form)));
     }

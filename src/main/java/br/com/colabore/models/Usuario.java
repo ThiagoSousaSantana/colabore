@@ -3,19 +3,19 @@ package br.com.colabore.models;
 import br.com.colabore.models.forms.UsuarioForm;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Document
+@Entity
 @NoArgsConstructor
 public class Usuario {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String senha;
     private LocalDateTime dataCadastro;
     private String nome;
@@ -27,8 +27,10 @@ public class Usuario {
     private String telefone;
     private boolean bloqueado;
 
+    @OneToOne
     private Endereco endereco;
 
+    @ManyToOne
     private Empresa empresa;
 
     public Usuario(UsuarioForm form) {

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class UsuarioResponse {
 
-    private String id;
+    private Long id;
     @JsonFormat(pattern = DataUtils.DATE_TIME_FORMAT)
     private LocalDateTime dataCadastro;
     private String nome;
