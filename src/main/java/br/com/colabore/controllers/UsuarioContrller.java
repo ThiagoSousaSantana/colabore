@@ -1,5 +1,6 @@
 package br.com.colabore.controllers;
 
+import br.com.colabore.models.forms.UsuarioBloqueadoForm;
 import br.com.colabore.models.forms.UsuarioForm;
 import br.com.colabore.models.responses.UsuarioResponse;
 import br.com.colabore.services.UsuarioService;
@@ -45,6 +46,12 @@ public class UsuarioContrller {
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponse> atualizaUsuario(@PathVariable Long id,
                                                            @RequestBody @Valid UsuarioForm form) {
+        return ResponseEntity.ok(new UsuarioResponse(usuarioService.atualizaUsuario(id, form)));
+    }
+
+    @PatchMapping("/{id}/bloqueado")
+    public ResponseEntity<UsuarioResponse> atualizaBloqueadoUsuario(@PathVariable Long id,
+                                                                    @RequestBody UsuarioBloqueadoForm form) {
         return ResponseEntity.ok(new UsuarioResponse(usuarioService.atualizaUsuario(id, form)));
     }
 }
