@@ -12,10 +12,10 @@ public class Demanda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean bloqueado;
-    private boolean concluido;
+    private boolean bloqueado = true;
+    private boolean concluido = false;
     private String descricao;
-    private LocalDateTime dataCadastro;
+    private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @ManyToOne
     private Usuario solicitante;
