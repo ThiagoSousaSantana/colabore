@@ -17,6 +17,7 @@ public class Demanda {
     private boolean concluido = false;
     private String descricao;
     private String titulo;
+    private String previsaoTempo;
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @ManyToOne
