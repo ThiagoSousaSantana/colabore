@@ -31,6 +31,7 @@ public class DemandaService {
         var solicitante = usuarioService.buscaPorId(form.getIdSolicitante());
 
         demanda.setDescricao(form.getDescricao());
+        demanda.setTitulo(form.getTitulo());
         demanda.setTipo(tipoDemanda);
         demanda.setMotivos(motivosDemanda);
         demanda.setSolicitante(solicitante);
