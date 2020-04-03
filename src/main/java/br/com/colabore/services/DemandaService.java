@@ -27,12 +27,12 @@ public class DemandaService {
     public Demanda salva(DemandaForm form) {
         var demanda = new Demanda();
         var tipoDemanda = tipoDemandaService.buscaPorId(form.getIdTipo());
-        var motivoDemanda = motivoDemandaService.buscaPorId(form.getIdMotivo());
+        var motivosDemanda = motivoDemandaService.buscaTodosPorId(form.getIdMotivos());
         var solicitante = usuarioService.buscaPorId(form.getIdSolicitante());
 
         demanda.setDescricao(form.getDescricao());
         demanda.setTipo(tipoDemanda);
-        demanda.setMotivo(motivoDemanda);
+        demanda.setMotivos(motivosDemanda);
         demanda.setSolicitante(solicitante);
 
         return repository.save(demanda);

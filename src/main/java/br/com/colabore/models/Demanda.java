@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,8 +24,8 @@ public class Demanda {
     @ManyToOne
     private Usuario colaborador;
 
-    @ManyToOne
-    private MotivoDemanda motivo;
+    @ManyToMany
+    private List<MotivoDemanda> motivos;
 
     @ManyToOne
     private TipoDemanda tipo;

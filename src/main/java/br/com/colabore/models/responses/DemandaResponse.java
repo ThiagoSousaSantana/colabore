@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class DemandaResponse {
@@ -20,7 +21,7 @@ public class DemandaResponse {
     private LocalDateTime dataCadastro;
     private UsuarioDemandaResponse solicitante;
     private UsuarioDemandaResponse colaborador;
-    private MotivoDemanda motivo;
+    private List<MotivoDemanda> motivos;
     private TipoDemanda tipo;
 
     public DemandaResponse(Demanda demanda) {
@@ -31,7 +32,7 @@ public class DemandaResponse {
         this.dataCadastro = demanda.getDataCadastro();
         this.solicitante = new UsuarioDemandaResponse(demanda.getSolicitante());
         this.colaborador = demanda.getColaborador() != null ? new UsuarioDemandaResponse(demanda.getColaborador()) : null;
-        this.motivo = demanda.getMotivo();
+        this.motivos = demanda.getMotivos();
         this.tipo = demanda.getTipo();
     }
 }
