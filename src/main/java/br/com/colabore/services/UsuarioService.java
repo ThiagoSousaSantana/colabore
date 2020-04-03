@@ -8,26 +8,34 @@ import br.com.colabore.models.responses.UsuarioResponse;
 import br.com.colabore.repositories.EnderecoRepository;
 import br.com.colabore.repositories.UsuarioRepository;
 import br.com.colabore.services.exceptions.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
-    @Autowired
     private UsuarioRepository repository;
-
-    @Autowired
     private EnderecoRepository enderecoRepository;
+    private PasswordEncoder passwordEncoder;
 
+    public UsuarioService(UsuarioRepository repository, EnderecoRepository enderecoRepository) {
+        this.repository = repository;
+        this.enderecoRepository = enderecoRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     public Usuario salva(@Valid UsuarioForm form) {
         var usuario = new Usuario(form);
         usuario.setEndereco(enderecoRepository.save(usuario.getEndereco()));
+        usuario.setSenha(passwordEncoder.encode(form.getSenha()));
         return repository.save(usuario);
     }
 
@@ -66,5 +74,11 @@ public class UsuarioService {
 
         form.getEndereco().setId(usuario.getEndereco().getId());
         usuario.setEndereco(form.getEndereco());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+        return repository.findByCpf(cpf).orElseThrow(() ->
+                new ObjectNotFoundException("Usuario não econtrado com CPF: " + cpf));
     }
 }

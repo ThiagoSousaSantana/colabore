@@ -9,6 +9,8 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class UsuarioResponse {
@@ -25,6 +27,7 @@ public class UsuarioResponse {
     private String email;
     private String telefone;
     private boolean bloqueado;
+    private Set<String> perfis = new HashSet<>();
 
     private Endereco endereco;
 
@@ -43,5 +46,6 @@ public class UsuarioResponse {
         this.endereco = usuario.getEndereco();
         this.empresa = usuario.getEmpresa();
         this.bloqueado = usuario.isBloqueado();
+        usuario.getPerfis().forEach(perfil -> this.perfis.add(perfil.getPerfil()));
     }
 }
