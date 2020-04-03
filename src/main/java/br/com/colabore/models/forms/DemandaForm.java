@@ -13,6 +13,8 @@ public class DemandaForm {
     private String descricao;
     @NotBlank
     private String titulo;
+    @NotBlank
+    private String previsaoTempo;
     @NotNull
     private Long idSolicitante;
     @NotNull
