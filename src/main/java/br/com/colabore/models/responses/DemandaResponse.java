@@ -17,6 +17,7 @@ public class DemandaResponse {
     private boolean bloqueado;
     private boolean concluido;
     private String descricao;
+    private String titulo;
     @JsonFormat(pattern = DataUtils.DATE_TIME_FORMAT)
     private LocalDateTime dataCadastro;
     private UsuarioDemandaResponse solicitante;
@@ -29,6 +30,7 @@ public class DemandaResponse {
         this.bloqueado = demanda.isBloqueado();
         this.concluido = demanda.isConcluido();
         this.descricao = demanda.getDescricao();
+        this.titulo = demanda.getTitulo();
         this.dataCadastro = demanda.getDataCadastro();
         this.solicitante = new UsuarioDemandaResponse(demanda.getSolicitante());
         this.colaborador = demanda.getColaborador() != null ? new UsuarioDemandaResponse(demanda.getColaborador()) : null;

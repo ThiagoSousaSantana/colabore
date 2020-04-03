@@ -16,6 +16,7 @@ public class Demanda {
     private boolean bloqueado = true;
     private boolean concluido = false;
     private String descricao;
+    private String titulo;
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @ManyToOne
