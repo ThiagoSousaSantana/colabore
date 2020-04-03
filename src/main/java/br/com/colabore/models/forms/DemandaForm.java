@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class DemandaForm {
@@ -13,7 +14,7 @@ public class DemandaForm {
     @NotNull
     private Long idSolicitante;
     @NotNull
-    private Long idMotivo;
+    private List<Long> idMotivos;
     @NotNull
     private Long idTipo;
 }

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MotivoDemandaService {
 
@@ -29,5 +31,9 @@ public class MotivoDemandaService {
 
     public Page<MotivoDemanda> lista(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    public List<MotivoDemanda> buscaTodosPorId(List<Long> idMotivos) {
+        return repository.findAllById(idMotivos);
     }
 }
