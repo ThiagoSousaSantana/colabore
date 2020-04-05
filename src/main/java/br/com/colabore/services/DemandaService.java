@@ -2,7 +2,9 @@ package br.com.colabore.services;
 
 import br.com.colabore.models.Demanda;
 import br.com.colabore.models.forms.DemandaForm;
+import br.com.colabore.models.forms.DemandaStatusForm;
 import br.com.colabore.repositories.DemandaRepository;
+import br.com.colabore.services.exceptions.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class DemandaService {
         var motivosDemanda = motivoDemandaService.buscaTodosPorId(form.getIdMotivos());
         var solicitante = usuarioService.buscaPorId(form.getIdSolicitante());
 
+        demanda.setStatus(form.getStatus());
         demanda.setDescricao(form.getDescricao());
         demanda.setPrevisaoTempo(form.getPrevisaoTempo());
         demanda.setTitulo(form.getTitulo());
@@ -42,5 +45,16 @@ public class DemandaService {
 
     public Page<Demanda> lista(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    public Demanda buscaPorId(Long id) {
+        return repository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Demanda não encontrada com ID: " + id));
+    }
+
+    public Demanda atualizaStatusDemanda(Long id, DemandaStatusForm form) {
+        var demanda = buscaPorId(id);
+        demanda.setStatus(form.getStatus());
+        return repository.save(demanda);
     }
 }

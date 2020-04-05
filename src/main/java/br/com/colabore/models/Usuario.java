@@ -27,7 +27,9 @@ public class Usuario implements UserDetails {
     private LocalDateTime dataCadastro;
     private String nome;
     private LocalDate dataNascimento;
+    @Column(unique = true)
     private String cpf;
+    @Column(unique = true)
     private String rg;
     private String estadoEmissorRg;
     private String email;

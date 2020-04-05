@@ -12,13 +12,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ServiceExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> validation(MethodArgumentNotValidException exception){
+    public ResponseEntity<StandardError> validation(MethodArgumentNotValidException exception) {
 
-        var err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
+        var erro = new ValidationError(
+                HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
 
         exception.getBindingResult().getFieldErrors().forEach(fieldError ->
-                err.addError(fieldError.getField(), fieldError.getDefaultMessage()));
+                erro.addError(fieldError.getField(), fieldError.getDefaultMessage()));
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(PerfilInvalidoException.class)
+    public ResponseEntity<StandardError> perfilInvalidoException(PerfilInvalidoException exception) {
+        var erro = new StandardError(HttpStatus.FORBIDDEN.value(), exception.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
     }
 }

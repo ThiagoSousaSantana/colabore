@@ -1,6 +1,7 @@
 package br.com.colabore.controllers;
 
 import br.com.colabore.models.forms.DemandaForm;
+import br.com.colabore.models.forms.DemandaStatusForm;
 import br.com.colabore.models.responses.DemandaResponse;
 import br.com.colabore.services.DemandaService;
 import org.springframework.data.domain.Page;
@@ -37,5 +38,16 @@ public class DemandaController {
     @GetMapping
     public Page<DemandaResponse> listaDemandas(Pageable pageable) {
         return service.lista(pageable).map(DemandaResponse::new);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DemandaResponse> buscaDemanda(@PathVariable Long id) {
+        return ResponseEntity.ok(new DemandaResponse(service.buscaPorId(id)));
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<DemandaResponse> atualizaStatusDemanda(@PathVariable Long id,
+                                                                 @RequestBody @Valid DemandaStatusForm form) {
+        return ResponseEntity.ok(new DemandaResponse(service.atualizaStatusDemanda(id, form)));
     }
 }

@@ -1,5 +1,6 @@
 package br.com.colabore.models;
 
+import br.com.colabore.models.constantes.StatusDemanda;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,8 +14,9 @@ public class Demanda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean bloqueado = true;
-    private boolean concluido = false;
+    @Enumerated(EnumType.STRING)
+    private StatusDemanda status;
+    @Column(length = 1000)
     private String descricao;
     private String titulo;
     private String previsaoTempo;

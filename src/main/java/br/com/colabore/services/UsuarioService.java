@@ -2,12 +2,13 @@ package br.com.colabore.services;
 
 
 import br.com.colabore.models.Usuario;
+import br.com.colabore.models.constantes.Perfil;
 import br.com.colabore.models.forms.UsuarioBloqueadoForm;
 import br.com.colabore.models.forms.UsuarioForm;
-import br.com.colabore.models.responses.UsuarioResponse;
 import br.com.colabore.repositories.EnderecoRepository;
 import br.com.colabore.repositories.UsuarioRepository;
 import br.com.colabore.services.exceptions.ObjectNotFoundException;
+import br.com.colabore.services.exceptions.PerfilInvalidoException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +30,7 @@ public class UsuarioService implements UserDetailsService {
     public UsuarioService(UsuarioRepository repository, EnderecoRepository enderecoRepository) {
         this.repository = repository;
         this.enderecoRepository = enderecoRepository;
+        // TODO(Implementar a criptografia corretamente)
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -44,8 +46,8 @@ public class UsuarioService implements UserDetailsService {
                 new ObjectNotFoundException("Usuario não econtrado com ID: " + id));
     }
 
-    public Page<UsuarioResponse> listaUsuarios(Pageable pageable) {
-        return repository.findAll(pageable).map(UsuarioResponse::new);
+    public Page<Usuario> listaUsuarios(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public Usuario atualizaUsuario(Long id, UsuarioForm form) {
@@ -80,5 +82,21 @@ public class UsuarioService implements UserDetailsService {
     public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
         return repository.findByCpf(cpf).orElseThrow(() ->
                 new ObjectNotFoundException("Usuario não econtrado com CPF: " + cpf));
+    }
+
+    public Usuario buscaPorId(Long id, Long idUsuarioLogado) {
+        var usuarioLogado = buscaPorId(idUsuarioLogado);
+        if (!usuarioLogado.getPerfis().contains(Perfil.AMDIN) && !idUsuarioLogado.equals(id)) {
+            throw new PerfilInvalidoException("Usuario sem permissão para buscar informações de outros usuarios");
+        }
+        return buscaPorId(id);
+    }
+
+    public Page<Usuario> listaUsuarios(Pageable pageable, Long idUsuarioLogado) {
+        var usuarioLogado = buscaPorId(idUsuarioLogado);
+        if (!usuarioLogado.getPerfis().contains(Perfil.AMDIN)) {
+            throw new PerfilInvalidoException("Usuario sem permissão para buscar informações de outros usuarios");
+        }
+        return repository.findAll(pageable);
     }
 }
