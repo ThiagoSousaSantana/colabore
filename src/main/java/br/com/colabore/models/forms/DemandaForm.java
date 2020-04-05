@@ -10,9 +10,9 @@ import java.util.List;
 public class DemandaForm {
 
     @NotBlank
-    private String descricao;
-    @NotBlank
     private String titulo;
+    @NotBlank
+    private String descricao;
     @NotBlank
     private String previsaoTempo;
     @NotNull

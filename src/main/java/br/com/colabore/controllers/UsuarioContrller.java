@@ -3,6 +3,7 @@ package br.com.colabore.controllers;
 import br.com.colabore.models.forms.UsuarioBloqueadoForm;
 import br.com.colabore.models.forms.UsuarioForm;
 import br.com.colabore.models.responses.UsuarioResponse;
+import br.com.colabore.security.JwtTokenProvider;
 import br.com.colabore.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ public class UsuarioContrller {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
     @PostMapping
     public ResponseEntity<UsuarioResponse> insereUsuario(@RequestBody @Valid UsuarioForm form) {
         var usuario = usuarioService.salva(form);
@@ -34,13 +38,15 @@ public class UsuarioContrller {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> buscaUsuario(@PathVariable Long id) {
-        return ResponseEntity.ok(new UsuarioResponse(usuarioService.buscaPorId(id)));
+    public ResponseEntity<UsuarioResponse> buscaUsuario(@PathVariable Long id, @RequestHeader String authorization) {
+        var idUsuarioLogado = tokenProvider.getIdUsuario(authorization);
+        return ResponseEntity.ok(new UsuarioResponse(usuarioService.buscaPorId(id, idUsuarioLogado)));
     }
 
     @GetMapping
-    public Page<UsuarioResponse> listaUsuarios(Pageable pageable) {
-        return usuarioService.listaUsuarios(pageable);
+    public Page<UsuarioResponse> listaUsuarios(Pageable pageable, @RequestHeader String authorization) {
+        var idUsuarioLogado = tokenProvider.getIdUsuario(authorization);
+        return usuarioService.listaUsuarios(pageable, idUsuarioLogado).map(UsuarioResponse::new);
     }
 
     @PutMapping("/{id}")

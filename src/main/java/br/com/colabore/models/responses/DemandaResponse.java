@@ -3,6 +3,7 @@ package br.com.colabore.models.responses;
 import br.com.colabore.models.Demanda;
 import br.com.colabore.models.MotivoDemanda;
 import br.com.colabore.models.TipoDemanda;
+import br.com.colabore.models.constantes.StatusDemanda;
 import br.com.colabore.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -14,8 +15,7 @@ import java.util.List;
 public class DemandaResponse {
 
     private Long id;
-    private boolean bloqueado;
-    private boolean concluido;
+    private StatusDemanda status;
     private String descricao;
     private String titulo;
     private String previsaoTempo;
@@ -28,12 +28,11 @@ public class DemandaResponse {
 
     public DemandaResponse(Demanda demanda) {
         this.id = demanda.getId();
-        this.bloqueado = demanda.isBloqueado();
-        this.concluido = demanda.isConcluido();
-        this.descricao = demanda.getDescricao();
-        this.previsaoTempo = demanda.getPrevisaoTempo();
         this.titulo = demanda.getTitulo();
+        this.descricao = demanda.getDescricao();
+        this.status = demanda.getStatus();
         this.dataCadastro = demanda.getDataCadastro();
+        this.previsaoTempo = demanda.getPrevisaoTempo();
         this.solicitante = new UsuarioDemandaResponse(demanda.getSolicitante());
         this.colaborador = demanda.getColaborador() != null ? new UsuarioDemandaResponse(demanda.getColaborador()) : null;
         this.motivos = demanda.getMotivos();
