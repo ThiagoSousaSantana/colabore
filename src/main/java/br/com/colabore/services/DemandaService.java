@@ -1,6 +1,7 @@
 package br.com.colabore.services;
 
 import br.com.colabore.models.Demanda;
+import br.com.colabore.models.constantes.StatusDemanda;
 import br.com.colabore.models.forms.DemandaForm;
 import br.com.colabore.models.forms.DemandaStatusForm;
 import br.com.colabore.repositories.DemandaRepository;
@@ -32,7 +33,7 @@ public class DemandaService {
         var motivosDemanda = motivoDemandaService.buscaTodosPorId(form.getIdMotivos());
         var solicitante = usuarioService.buscaPorId(form.getIdSolicitante());
 
-        demanda.setStatus(form.getStatus());
+        demanda.setStatus(StatusDemanda.BLOQUEADO);
         demanda.setDescricao(form.getDescricao());
         demanda.setPrevisaoTempo(form.getPrevisaoTempo());
         demanda.setTitulo(form.getTitulo());

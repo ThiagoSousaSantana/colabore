@@ -1,6 +1,5 @@
 package br.com.colabore.models.forms;
 
-import br.com.colabore.models.constantes.StatusDemanda;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -14,8 +13,6 @@ public class DemandaForm {
     private String titulo;
     @NotBlank
     private String descricao;
-    @NotNull
-    private StatusDemanda status;
     @NotBlank
     private String previsaoTempo;
     @NotNull

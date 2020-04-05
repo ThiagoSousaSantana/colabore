@@ -1,7 +1,7 @@
 package br.com.colabore.models.constantes;
 
 public enum StatusDemanda {
-    EM_ABERTO,
+    CONCLUIDO,
     PENDENTE,
     BLOQUEADO;
 
